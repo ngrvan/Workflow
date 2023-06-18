@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+
+  <body id="body">
+    <%- include("./partials/header.ejs") %>
+
+    <main id="main">
+      <h1 id="H_neuekunde">Neue Auftrag erstellen</h1>
+      <section class="S_neuekunde">
+        <form method="post" action="/alle">
+          <label for="Auftrag_id">Auftrag_ID: </label>
+          <input name="Auftrag_id" id="Auftrag_id" type="text" />
+
+          <label for="Kunde_ID">Kunde_ID: </label>
+          <input name="Kunde_ID" id="Kunde_ID" type="text" />
+
+          <label for="Lieferdatum">Lieferdatum: </label>
+          <input name="Lieferdatum" id="Lieferdatum" type="date" />
+
+          <div class="auftragInput">
+
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][Anzahl]">Anzahl: </label>
+              <input
+                name="auftrag_Info[0][Anzahl]"
+                class="Anzahl"
+                type="number"
+              />
+            </div>
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][Teil_id]">Teil_id: </label>
+              <input
+                name="auftrag_Info[0][Teil_id]"
+                class="Teil_id"
+                type="text"
+              />
+            </div>
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][ankommendeDatum]"
+                >Datum der ankommende Teile:
+              </label>
+              <input
+                name="auftrag_Info[0][ankommendeDatum]"
+                class="ankommendeDatum"
+                type="date"
+              />
+            </div>
+          </div>
+
+        
+
+          <span class="material-symbols-outlined icon" id="iconId"> add </span>
+
+          <label for="vormerk">Vormerk:</label>
+          <textarea name="vormerk" id="vormerk"></textarea>
+
+          <button class="create">create</button>
+        </form>
+      </section>
+    </main>
+
+  <script>
+    
+    let icon=document.getElementById("iconId");
+
+    icon.onclick=function(){
+      let auftragDiv= document.getElementsByClassName("auftragInput");
+      let count=auftragDiv.length;
+      let neuDiv= auftragDiv[0].cloneNode(true);
+      let labels= neuDiv.getElementsByTagName("label");
+      let inputs=neuDiv.getElementsByTagName("input");
+      for (let index = 0; index < labels.length; index++) {
+        labels[index].htmlFor = labels[index].htmlFor.replace("0",count.toString());
+      }
+      for (let index = 0; index < inputs.length; index++) {
+        inputs[index].name = inputs[index].name.replace("0",count.toString());
+      }
+       
+
+      
+      
+      document.getElementById("iconId").before(neuDiv);
+      
+    }
+
+  </script>
+  </body>
+
+  <%- include("./partials/footer.ejs") %>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+
+  <body>
+    <%- include("./partials/header.ejs") %>
+
+    <h2>AuftragsInfo</h2>
+
+    <div class="card">
+      <p>
+        <strong>Auftrags-ID:</strong>
+        <span id="auftrags-id"><%= objekt_Auftrag.Auftrag_id %></span>
+      </p>
+      <p>
+        <strong>Kunde-ID:</strong>
+        <span id="auftrags-id"><%= objekt_Auftrag.Kunde_ID%></span>
+      </p>
+      <p>
+        <strong>Gewünschte Lieferzeit:</strong>
+        <span id="lieferzeit"><%= objekt_Auftrag.Lieferdatum %></span>
+      </p>
+    </div>
+
+    <div class="abteilung_container">
+      <div class="Service_Disk">
+        <h2>Service Disk</h2>
+        <p><strong>Status:</strong> <span id="status">Open</span></p>
+        <p>
+          <strong>To Do:</strong>
+          <span id="to_do"
+            ><select
+              id="serviceSelect"
+              class="select"
+              onchange="myfunktion(this)"
+            ></select
+          ></span>
+        </p>
+        <p>
+          <strong>Ende der Aufgabe:</strong>
+          <span id="ende">wird von der Abteilung eingetragen</span>
+        </p>
+        <p><strong>Anzahl:</strong> <span id="anzahl"></span></p>
+        <p>
+          <strong>ankommenDatum für Teile:</strong>
+          <span id="ankommenDatum"></span>
+        </p>
+        <p>
+          <strong>Lager_Status: </strong>
+          <span id="lieferzeit">angekommen</span>
+        </p>
+        <p>
+          <strong>Vormerk:</strong>
+          <span id="vormerk"><%= objekt_Auftrag.Vormerk %></span>
+        </p>
+      </div>
+
+      <div class="System_Configiration">
+        <h2>System Configiration</h2>
+        <p><strong>Status:</strong> <span id="status">Open</span></p>
+        <p>
+          <strong>To Do:</strong>
+          <span id="to_do1"
+            ><select
+              id="SystemConfSelect"
+              class="select"
+              onchange="myfunktion(this)"
+            ></select>
+          </span>
+        </p>
+        <p>
+          <strong>Ende der Aufgabe:</strong>
+          <span id="ende">wird von der Abteilung eingetragen</span>
+        </p>
+        <p><strong>Anzahl:</strong> <span id="anzahl_1"></span></p>
+        <p>
+          <strong>ankommenDatum für Teile:</strong>
+          <span id="ankommenDatum1"></span>
+        </p>
+        <p>
+          <strong>Lager_Status: </strong>
+          <span id="lieferzeit">angekommen</span>
+        </p>
+        <p>
+          <strong>Vormerk:</strong>
+          <span id="vormerk"><%= objekt_Auftrag.Vormerk %></span>
+        </p>
+      </div>
+      <div class="Profisional_Services">
+        <h2>Profisional Services</h2>
+        <p><strong>Status:</strong> <span id="status">Open</span></p>
+        <p>
+          <strong>To Do:</strong>
+          <span id="to_do2"
+            ><select
+              id="profisionalSelect"
+              class="select"
+              onchange="myfunktion(this)"
+            ></select>
+          </span>
+        </p>
+        <p>
+          <strong>Ende der Aufgabe:</strong>
+          <span id="ende">wird von der Abteilung eingetragen</span>
+        </p>
+        <p><strong>Anzahl:</strong> <span id="anzahl_2"></span></p>
+        <p>
+          <strong>ankommenDatum für Teile:</strong>
+          <span id="ankommenDatum2"></span>
+        </p>
+        <p>
+          <strong>Lager_Status: </strong>
+          <span id="lieferzeit">angekommen</span>
+        </p>
+        <p>
+          <strong>Vormerk:</strong>
+          <span id="vormerk"><%= objekt_Auftrag.Vormerk %></span>
+        </p>
+      </div>
+      <div class="Logistik">
+        <h2>Logistik</h2>
+        <p><strong>Status:</strong> <span id="status">Open</span></p>
+        <p>
+          <strong>To Do:</strong>
+          <span id="to_do3"
+            ><select
+              id="logistikSelect"
+              class="select"
+              onchange="myfunktion(this)"
+            ></select
+          ></span>
+        </p>
+        <p>
+          <strong>Ende der Aufgabe:</strong>
+          <span id="ende">wird von der Abteilung eingetragen</span>
+        </p>
+        <p><strong>Anzahl:</strong> <span id="anzahl_3"></span></p>
+        <p>
+          <strong>ankommenDatum für Teile:</strong>
+          <span id="ankommenDatum3"></span>
+        </p>
+        <p>
+          <strong>Lager_Status: </strong>
+          <span id="lieferzeit">angekommen</span>
+        </p>
+        <p>
+          <strong>Vormerk:</strong>
+          <span id="vormerk"><%= objekt_Auftrag.Vormerk %></span>
+        </p>
+      </div>
+    </div>
+    <button data-linkid="<%= objekt_Auftrag._id %>" class="Delete">
+      Löschen
+    </button>
+    <%- include("./partials/footer.ejs") %>
+
+   <script>
+      //aktuelle Werte zeigen
+      window.onload = function () {
+        const select = document.querySelectorAll(".select");
+        select.forEach((e) => {
+          myfunktion(e);
+        });
+      };
+
+      //onchange Funktion difinieren
+      function myfunktion(obj) {
+        //console.log(obj.parentNode);
+        const btn = document.querySelector(".Delete");
+        const auftragID = btn.getAttribute("data-linkid");
+        //console.log(auftragID);
+        fetch(`/auftragInfo/${auftragID}`)
+          .then((result) => {
+            return result.json();
+          })
+          .then((data) => {
+            data.auftrag_Info.forEach((element) => {
+              var str = element.Teil_id.substring(0, 3);
+             
+             
+              //console.log(str);
+              if (element.Teil_id.includes(obj.value) && str === "DSK") {
+                //console.log(element);
+
+                document.getElementById("anzahl_1").innerHTML = element.Anzahl;
+                document.getElementById("ankommenDatum1").innerHTML =
+                  element.ankommendeDatum;
+              }
+              if (element.Teil_id.includes(obj.value) && str === "DPS") {
+                //console.log(element);
+                document.getElementById("anzahl_2").innerHTML = element.Anzahl;
+                document.getElementById("ankommenDatum2").innerHTML =
+                  element.ankommendeDatum;
+              }
+              if (element.Teil_id.includes(obj.value) && str === "DLG") {
+                //console.log(element);
+
+                document.getElementById("anzahl_3").innerHTML = element.Anzahl;
+                document.getElementById("ankommenDatum3").innerHTML =
+                  element.ankommendeDatum;
+              }
+              if (element.Teil_id.includes(obj.value) && str === "DSD") {
+                //console.log(element);
+
+                document.getElementById("anzahl").innerHTML = element.Anzahl;
+                document.getElementById("ankommenDatum").innerHTML =
+                  element.ankommendeDatum;
+              }
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        // console.log(obj.value);
+      }
+
+      const btn = document.querySelector(".Delete");
+      const auftragID = btn.getAttribute("data-linkid");
+
+      btn.addEventListener("click", (e) => {
+        fetch(`/auftrag-informationen/${auftragID}`, { method: "DELETE" })
+          .then((response) => response.json())
+
+          .then((data) => (window.location.href = data.Link))
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+
+      fetch(`/auftragInfo/${auftragID}`)
+        .then((result) => {
+          return result.json();
+        
+        })
+        .then((data) => {
+          console.log(data);
+          data.auftrag_Info.forEach((auftrag) => {
+            console.log(data);
+            const str = auftrag.Teil_id.substring(0, 3);
+            const text = auftrag.Teil_id;
+            const lastTenChars = text.slice(-7);
+            if (str === "DSD") {
+              let serviceSelect = document.getElementById("serviceSelect");
+              let option = document.createElement("option");
+              serviceSelect.add(option);
+              option.text = lastTenChars;
+            }
+            if (str === "DSK") {
+              let SystemConfSelect =
+                document.getElementById("SystemConfSelect");
+              let option = document.createElement("option");
+              SystemConfSelect.add(option);
+
+              option.text = lastTenChars;
+            }
+
+            if (str === "DPS") {
+              let profisionalSelect =
+                document.getElementById("profisionalSelect");
+              let option = document.createElement("option");
+              profisionalSelect.add(option);
+
+              option.text = lastTenChars;
+            }
+            if (str === "DLG") {
+              let logistikSelect = document.getElementById("logistikSelect");
+              let option = document.createElement("option");
+              logistikSelect.add(option);
+
+              option.text = lastTenChars;
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
