@@ -12,9 +12,10 @@ const auftragSchema = new Schema({
     
     Anzahl: {type: Number, required:true},
     Teil_id: {type: String, required:true, trim:true},
-    ankommendeDatum: {type: String, required:true , trim:true}}],
+    ankommendeDatum: {type: String, required:true , trim:true},
+    Vormerk: {type:String}}]
     
-    Vormerk: String
+  
   });
   
 
