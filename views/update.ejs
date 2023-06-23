@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+
+  <body id="body">
+    <%- include("./partials/header.ejs") %>
+
+    <main id="main">
+      <h1 id="H_neuekunde">Update</h1>
+      <section class="S_neuekunde">
+        <form id="updateForm" action="/alle" >
+          <label for="Auftrag_id">Auftrag_ID: </label>
+          <input name="Auftrag_id" id="Auftrag_id" type="text" />
+
+          <label for="Kunde_ID">Kunde_ID: </label>
+          <input name="Kunde_ID" id="Kunde_ID" type="text" />
+
+          <label for="Lieferdatum">Lieferdatum: </label>
+          <input name="Lieferdatum" id="Lieferdatum" type="date" />
+
+          <div class="auftragInput">
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][Anzahl]">Anzahl: </label>
+              <input
+                name="auftrag_Info[0][Anzahl]"
+                id="anzahlId0"
+                type="number"
+                class="Anzahl"
+              />
+            </div>
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][Teil_id]">Teil_id: </label>
+              <input
+                name="auftrag_Info[0][Teil_id]"
+                id="teilId0"
+                type="text"
+                class="Teil_id"
+              />
+            </div>
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][ankommendeDatum]"
+                >Datum der ankommende Teile:
+              </label>
+              <input
+                name="auftrag_Info[0][ankommendeDatum]"
+                id="ankommenId0"
+                type="date"
+                class="ankommendeDatum"
+              />
+            </div>
+            <div class="Marke_input">
+              <label for="auftrag_Info[0][Vormerk]">Vormerk: </label>
+              <input
+                name="auftrag_Info[0][Vormerk]"
+                class="Vormerk"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <span
+            class="material-symbols-outlined icon"
+            id="iconId"
+            onclick="erzeugen()"
+          >
+            add
+          </span>
+
+          <button
+            data-linkid="<%= obAuftrag._id %>"
+            id="btn"
+            class="create"
+            type="submit"
+          >
+            Update
+          </button>
+        </form>
+      </section>
+      <script>
+        function erzeugen() {
+          var icon = document.getElementById("iconId");
+
+          var auftragDiv = document.getElementsByClassName("auftragInput");
+          var count = auftragDiv.length;
+
+          var neuDiv = auftragDiv[0].cloneNode(true);
+          var labels = neuDiv.getElementsByTagName("label");
+          var inputs = neuDiv.getElementsByTagName("input");
+
+          for (let index = 0; index < labels.length; index++) {
+            labels[index].htmlFor = labels[index].htmlFor.replace(
+              "0",
+              count.toString()
+            );
+          }
+          for (let index = 0; index < inputs.length; index++) {
+            inputs[index].name = inputs[index].name.replace(
+              "0",
+              count.toString()
+            );
+            inputs[index].id = inputs[index].id.replace("0", count.toString());
+          }
+
+          document.getElementById("iconId").before(neuDiv);
+        }
+        const btn = document.querySelector(".create");
+        const obAuftragID = btn.getAttribute("data-linkid");
+
+        let Auftrag_id = document.getElementById("Auftrag_id");
+        let Kunde_ID = document.getElementById("Kunde_ID");
+        let Lieferdatum = document.getElementById("Lieferdatum");
+        
+    var anzahl,Teil_id, ankommenDatum,_id
+        fetch(`/updateJson/${obAuftragID}`)
+          .then((result) => {
+            return result.json();
+          })
+          .then((data) => {
+            _id = data._id;
+            console.log(data);
+            Auftrag_id.setAttribute("value", data.Auftrag_id);
+            Kunde_ID.setAttribute("value", data.Kunde_ID);
+            Lieferdatum.setAttribute("value", data.Lieferdatum);
+
+            var Infolength = data.auftrag_Info.length;
+            if (Infolength > 1) {
+              erzeugen();
+            }
+
+            for (var i = 0; i < Infolength; i++) {
+
+              anzahl = document.getElementById(`anzahlId${i}`);
+              
+              Teil_id = document.getElementById(`teilId${i}`);
+              ankommendeDatum = document.getElementById(`ankommenId${i}`);
+
+              anzahl.setAttribute("value", data.auftrag_Info[i].Anzahl);
+              console.log(anzahl.value);
+              Teil_id.setAttribute("value", data.auftrag_Info[i].Teil_id);
+              ankommendeDatum.setAttribute(
+                "value",
+                data.auftrag_Info[i].ankommendeDatum
+              );
+            }
+          });
+
+
+          
+        const form = document.getElementById("updateForm");
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const kundeId=Kunde_ID.value;
+          const auftragsId=Auftrag_id.value;
+          
+          const id = _id;
+          const AnzahlUpdate = anzahl.value;
+          const Teil_idUpdate = Teil_id.value;
+          const ankommendeDatumUpdate = ankommendeDatum.value;
+          const LieferdatumUpdate = Lieferdatum.value;
+          
+
+          var daten = JSON.stringify({
+              _id,
+              auftragsId,
+              kundeId,
+              LieferdatumUpdate,
+              AnzahlUpdate,
+              Teil_idUpdate,
+              ankommendeDatumUpdate,
+            })
+          console.log(daten);
+
+          fetch(`/update/${id}`, {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: daten,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              (window.location.href = data.Link)
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+      </script>
+    </main>
+  </body>
+</html>

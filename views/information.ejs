@@ -149,9 +149,13 @@
         </p>
       </div>
     </div>
+    <a href="/update/<%= objekt_Auftrag._id %>" id="update" >Update</a>
+    <div class="button">
     <button data-linkid="<%= objekt_Auftrag._id %>" class="Delete">
       Löschen
     </button>
+    
+  </div>
     <%- include("./partials/footer.ejs") %>
 
     <script>
@@ -275,6 +279,7 @@
             }
           });
         });
+     
     </script>
   </body>
 </html>

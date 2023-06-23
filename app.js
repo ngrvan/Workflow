@@ -5,6 +5,7 @@ const app = express();
 const port = 5000;
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const Auftrag = require("./models/auftragSchema");
 
@@ -111,6 +112,83 @@ app.delete("/auftrag-informationen/:id", (req, res) => {
 });
 
 
+app.get("/update/:id",(req, res) => {
+ 
+  Auftrag.findById(req.params.id)
+  .then((result) => {
+    res.render("update", { mytite: "Update", obAuftrag: result });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+});
+app.get("/updateJson/:id",(req, res) => {
+  Auftrag.findById(req.params.id)
+    .then((result) => {
+     res.setHeader("content-type", "application/json");
+     res.send(JSON.stringify(result));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
+})
+
+
+
+app.put(`/update/:id`,async (req,res ) => {
+ 
+  //console.log(req.body);
+  let neuAuftrag=req.body;
+  let kundeId=neuAuftrag.kundeId;
+  let auftragId=neuAuftrag.auftragsId;
+  let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
+  let AnzahlUpdate=neuAuftrag.AnzahlUpdate;
+  let Teil_idUpdate=neuAuftrag.Teil_idUpdate;
+  let ankommendeDatumUpdate=neuAuftrag.ankommendeDatumUpdate;
+  console.log(neuAuftrag);
+  const id = req.params.id;
+ 
+  Auftrag.updateOne({_id:id},{$set:{Kunde_ID: kundeId,Auftrag_id: auftragId,Lieferdatum:LieferdatumUpdate,Anzhal:AnzahlUpdate
+    ,Teil_id:Teil_idUpdate,ankommendeDatum:ankommendeDatumUpdate}})
+  .then((result) => {
+    res.json({ Link: "/alle" });
+  }).catch((err) => {
+    console.log(err);
+  })
+
+ /*
+  let auftrag=req.body;
+try{
+auftrag=await Auftrag.findById(req.params.id)
+Auftrag.Lieferdatum=req.body.LieferdatumUpdate;
+Auftrag.Anzahl=req.body.AnzahlUpdate;
+Auftrag.Teil_id=req.body.Teil_idUpdate;
+Auftrag.ankommenDatum=req.body.ankommendeDatumUpdate;
+await auftrag.save();
+console.log(auftrag);
+res.redirect(`/alle`);
+}catch{
+if(auftrag==null){
+  res.redirect(`/alle`)
+}else{
+  res.render("/",{
+    auftrag:auftrag,
+    errorMessage: "Error ubdating Auftrag"
+  })
+
+}
+}
+*/
+  // const id = req.params.id;
+
+  // const LieferdatumUpdate= req.body.LieferdatumUpdate;
+  // const AnzahlUpdate= req.body.AnzahlUpdate;
+  // const Teil_idUpdate= req.body.Teil_idUpdate;
+  // const ankommendeDatumUpdate= req.body.ankommendeDatumUpdate;
+  // let collection=connectDB.collection("auftrags");
+  // collection.updateOne({_id:id},{$set:{Lieferdatum:LieferdatumUpdate,Anzhal:AnzahlUpdate,Teil_id:Teil_idUpdate,ankommendeDatum:ankommendeDatumUpdate}})
+})
 start();
 
 
@@ -118,5 +196,5 @@ start();
 app.use("/alle",alleAuftragRouter);
 //  404
 app.use((req, res) => {
-  res.status(404).send("Die Seite exestiert nicht");
+  res.status(404).send("./views/not-fund.ejs");
 });
