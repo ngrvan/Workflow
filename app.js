@@ -138,25 +138,35 @@ app.get("/updateJson/:id",(req, res) => {
 
 app.put(`/update/:id`,async (req,res ) => {
  
-  console.log(req.body);
+//  console.log(req.body);
   let neuAuftrag=req.body;
   let kundeId=neuAuftrag.kundeId;
   let auftragId=neuAuftrag.auftragsId;
   let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
-  let AnzahlUpdate=neuAuftrag.AnzahlUpdate;
-  console.log(AnzahlUpdate);
-  let Teil_idUpdate=neuAuftrag.Teil_idUpdate;
-  let ankommendeDatumUpdate=neuAuftrag.ankommendeDatumUpdate;
+  
+
+
+
+  let info=neuAuftrag.auftrag_InfoUpadat;
+  console.log(info);
+for (let index = 0; index < info.length; index++) {
+  
+  var AnzahlUpdate=info[index].AnzahlUpdate;
+  var Teil_idUpdate=info[index].Teil_idUpdate;
+  var ankommendeDatumUpdate=info[index].ankommendeDatumUpdate;
+
+
 
   const id = req.params.id;
- 
-  Auftrag.updateOne({_id:id},{$set:{Kunde_ID: kundeId,Auftrag_id: auftragId,Lieferdatum:LieferdatumUpdate,Anzhal:AnzahlUpdate
-    ,Teil_id:Teil_idUpdate,ankommendeDatum:ankommendeDatumUpdate}})
+
+  Auftrag.updateOne({_id:id},{$set:{Auftrag_id: auftragId,Kunde_ID: kundeId,Lieferdatum:LieferdatumUpdate,auftrag_Info:[{Anzahl:AnzahlUpdate,
+    Teil_id:Teil_idUpdate, ankommendeDatum:ankommendeDatumUpdate}]}})
   .then((result) => {
     res.json({ Link: "/alle" });
   }).catch((err) => {
     console.log(err);
   })
+}
 
  /*
   let auftrag=req.body;
