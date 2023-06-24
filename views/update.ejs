@@ -18,7 +18,7 @@
 
           <label for="Lieferdatum">Lieferdatum: </label>
           <input name="Lieferdatum" id="Lieferdatum" type="date" />
-
+<div id="container">
           <div class="auftragInput">
             <div class="Marke_input">
               <label for="auftrag_Info[0][Anzahl]">Anzahl: </label>
@@ -58,14 +58,8 @@
               />
             </div>
           </div>
-
-          <span
-            class="material-symbols-outlined icon"
-            id="iconId"
-            onclick="erzeugen()"
-          >
-            add
-          </span>
+        </div>
+         
 
           <button
             data-linkid="<%= obAuftrag._id %>"
@@ -81,10 +75,10 @@
         function erzeugen() {
           var icon = document.getElementById("iconId");
 
-          var auftragDiv = document.getElementsByClassName("auftragInput");
+          let auftragDiv = document.getElementsByClassName("auftragInput");
           var count = auftragDiv.length;
 
-          var neuDiv = auftragDiv[0].cloneNode(true);
+          let neuDiv = auftragDiv[0].cloneNode(true);
           var labels = neuDiv.getElementsByTagName("label");
           var inputs = neuDiv.getElementsByTagName("input");
 
@@ -93,6 +87,7 @@
               "0",
               count.toString()
             );
+         
           }
           for (let index = 0; index < inputs.length; index++) {
             inputs[index].name = inputs[index].name.replace(
@@ -100,6 +95,7 @@
               count.toString()
             );
             inputs[index].id = inputs[index].id.replace("0", count.toString());
+         
           }
 
           document.getElementById("iconId").before(neuDiv);
@@ -110,8 +106,13 @@
         let Auftrag_id = document.getElementById("Auftrag_id");
         let Kunde_ID = document.getElementById("Kunde_ID");
         let Lieferdatum = document.getElementById("Lieferdatum");
+
+
         
-    var anzahl,Teil_id, ankommenDatum,_id
+        var anzahl=document.getElementById("anzahlId0");
+        var Teil_id=document.getElementById("teilId0");
+        var ankommenDatum=document.getElementById("ankommenId0");
+   
         fetch(`/updateJson/${obAuftragID}`)
           .then((result) => {
             return result.json();
@@ -122,27 +123,107 @@
             Auftrag_id.setAttribute("value", data.Auftrag_id);
             Kunde_ID.setAttribute("value", data.Kunde_ID);
             Lieferdatum.setAttribute("value", data.Lieferdatum);
-
+        /*     Anzahl.setAttribute("value", data.auftrag_Info[0].Anzahl);
+            Teil_id.setAttribute("value",data.auftrag_Info[0].Teil_id);
+            ankommenDatum.setAttribute("value",data.auftrag_Info[0].ankommenDatum); */
             var Infolength = data.auftrag_Info.length;
-            if (Infolength > 1) {
-              erzeugen();
+          
+           
+            if(Infolength>0){
+              var auftragDiv = document.getElementsByClassName("auftragInput");
+           
+              var neuDiv;
+           
+          var container= document.getElementById("container");
+              for (let index = 0; index <Infolength-1; index++) {
+       
+                    neuDiv=auftragDiv[0].cloneNode(true);
+                  
+                    var count = auftragDiv.length;
+             var labels = neuDiv.getElementsByTagName("label");
+            var inputs = neuDiv.getElementsByTagName("input");
+            
+            for (let index = 0; index < labels.length; index++) {
+            labels[index].htmlFor = labels[index].htmlFor.replace(
+              "0",
+              count.toString()
+            );
+         
+          }
+          for (let index = 0; index < inputs.length; index++) {
+            inputs[index].name = inputs[index].name.replace(
+              "0",
+              count.toString()
+            );
+            inputs[index].id = inputs[index].id.replace("0", count.toString());
+         
+          } 
+          
+
+
+          container.appendChild(neuDiv);
+                    console.log(neuDiv); 
+
+             }
+for (var i = 0; i < Infolength; i++) {
+
+anzahl = document.getElementById(`anzahlId${i}`);
+//console.log(anzahl.id);
+
+Teil_id = document.getElementById(`teilId${i}`);
+ankommendeDatum = document.getElementById(`ankommenId${i}`);
+
+anzahl.setAttribute("value", data.auftrag_Info[i].Anzahl);
+//console.log(anzahl.value);
+Teil_id.setAttribute("value", data.auftrag_Info[i].Teil_id);
+ankommendeDatum.setAttribute(
+  "value",
+  data.auftrag_Info[i].ankommendeDatum
+);
+}
+       /*  var count = auftragDiv.length;
+             var labels = neuDiv.getElementsByTagName("label");
+            var inputs = neuDiv.getElementsByTagName("input");
+            for (let index = 0; index < labels.length; index++) {
+            labels[index].htmlFor = labels[index].htmlFor.replace(
+              "0",
+              count.toString()
+            );
+         
+          }
+          for (let index = 0; index < inputs.length; index++) {
+            inputs[index].name = inputs[index].name.replace(
+              "0",
+              count.toString()
+            );
+            inputs[index].id = inputs[index].id.replace("0", count.toString());
+         
+          } */
+
+
+
+                //document.getElementById("iconId").before(neuDiv);
+
             }
 
-            for (var i = 0; i < Infolength; i++) {
+            ///console.log(Infolength);
+           //erzeugen();
+            /* for (var i = 0; i < Infolength; i++) {
 
               anzahl = document.getElementById(`anzahlId${i}`);
+              //console.log(anzahl.id);
               
               Teil_id = document.getElementById(`teilId${i}`);
               ankommendeDatum = document.getElementById(`ankommenId${i}`);
 
               anzahl.setAttribute("value", data.auftrag_Info[i].Anzahl);
-              console.log(anzahl.value);
+              //console.log(anzahl.value);
               Teil_id.setAttribute("value", data.auftrag_Info[i].Teil_id);
               ankommendeDatum.setAttribute(
                 "value",
                 data.auftrag_Info[i].ankommendeDatum
               );
-            }
+            } */
           });
 
 

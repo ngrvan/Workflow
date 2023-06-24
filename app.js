@@ -138,7 +138,7 @@ app.get("/updateJson/:id",(req, res) => {
 
 app.put(`/update/:id`,async (req,res ) => {
  
-  //console.log(req.body);
+  console.log(req.body);
   let neuAuftrag=req.body;
   let kundeId=neuAuftrag.kundeId;
   let auftragId=neuAuftrag.auftragsId;
