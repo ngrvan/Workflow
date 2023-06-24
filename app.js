@@ -144,9 +144,10 @@ app.put(`/update/:id`,async (req,res ) => {
   let auftragId=neuAuftrag.auftragsId;
   let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
   let AnzahlUpdate=neuAuftrag.AnzahlUpdate;
+  console.log(AnzahlUpdate);
   let Teil_idUpdate=neuAuftrag.Teil_idUpdate;
   let ankommendeDatumUpdate=neuAuftrag.ankommendeDatumUpdate;
-  console.log(neuAuftrag);
+
   const id = req.params.id;
  
   Auftrag.updateOne({_id:id},{$set:{Kunde_ID: kundeId,Auftrag_id: auftragId,Lieferdatum:LieferdatumUpdate,Anzhal:AnzahlUpdate
