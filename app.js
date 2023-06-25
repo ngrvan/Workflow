@@ -145,19 +145,23 @@ app.put(`/update/:id`,async (req,res ) => {
   let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
   
 
+  const id = req.params.id;
 
 
   let info=neuAuftrag.auftrag_InfoUpadat;
-  console.log(info);
+  var AnzahlUpdate;
+  var Teil_idUpdate
+
+
+  var ankommendeDatumUpdate;
 for (let index = 0; index < info.length; index++) {
   
-  var AnzahlUpdate=info[index].AnzahlUpdate;
-  var Teil_idUpdate=info[index].Teil_idUpdate;
-  var ankommendeDatumUpdate=info[index].ankommendeDatumUpdate;
+   AnzahlUpdate=info[index].AnzahlUpdate;
+   Teil_idUpdate=info[index].Teil_idUpdate;
+   ankommendeDatumUpdate=info[index].ankommendeDatumUpdate;
+console.log("anzahl :" + AnzahlUpdate + " teil: " + Teil_idUpdate + " ankommen : " + ankommendeDatumUpdate);
 
-
-
-  const id = req.params.id;
+}
 
   Auftrag.updateOne({_id:id},{$set:{Auftrag_id: auftragId,Kunde_ID: kundeId,Lieferdatum:LieferdatumUpdate,auftrag_Info:[{Anzahl:AnzahlUpdate,
     Teil_id:Teil_idUpdate, ankommendeDatum:ankommendeDatumUpdate}]}})
@@ -166,39 +170,9 @@ for (let index = 0; index < info.length; index++) {
   }).catch((err) => {
     console.log(err);
   })
-}
 
- /*
-  let auftrag=req.body;
-try{
-auftrag=await Auftrag.findById(req.params.id)
-Auftrag.Lieferdatum=req.body.LieferdatumUpdate;
-Auftrag.Anzahl=req.body.AnzahlUpdate;
-Auftrag.Teil_id=req.body.Teil_idUpdate;
-Auftrag.ankommenDatum=req.body.ankommendeDatumUpdate;
-await auftrag.save();
-console.log(auftrag);
-res.redirect(`/alle`);
-}catch{
-if(auftrag==null){
-  res.redirect(`/alle`)
-}else{
-  res.render("/",{
-    auftrag:auftrag,
-    errorMessage: "Error ubdating Auftrag"
-  })
 
-}
-}
-*/
-  // const id = req.params.id;
 
-  // const LieferdatumUpdate= req.body.LieferdatumUpdate;
-  // const AnzahlUpdate= req.body.AnzahlUpdate;
-  // const Teil_idUpdate= req.body.Teil_idUpdate;
-  // const ankommendeDatumUpdate= req.body.ankommendeDatumUpdate;
-  // let collection=connectDB.collection("auftrags");
-  // collection.updateOne({_id:id},{$set:{Lieferdatum:LieferdatumUpdate,Anzhal:AnzahlUpdate,Teil_id:Teil_idUpdate,ankommendeDatum:ankommendeDatumUpdate}})
 })
 start();
 
@@ -207,5 +181,5 @@ start();
 app.use("/alle",alleAuftragRouter);
 //  404
 app.use((req, res) => {
-  res.status(404).send("./views/not-fund.ejs");
+  res.status(404).render("404", { mytite: "Page Not Fund"})
 });
