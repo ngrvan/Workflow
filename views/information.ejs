@@ -227,15 +227,15 @@
       const auftragID = btn.getAttribute("data-linkid");
 
       btn.addEventListener("click", (e) => {
-        fetch(`/auftrag-informationen/${auftragID}`, { method: "DELETE" })
-          .then((response) => response.json())
-
-          .then((data) => (window.location.href = data.Link))
-          .catch((err) => {
-            console.log(err);
-          });
+  if (confirm("Möchten Sie den Auftrag wirklich löschen?")) {
+    fetch(`/auftrag-informationen/${auftragID}`, { method: "DELETE" })
+      .then((response) => response.json())
+      .then((data) => (window.location.href = data.Link))
+      .catch((err) => {
+        console.log(err);
       });
-
+  }
+});
       fetch(`/auftragInfo/${auftragID}`)
         .then((result) => {
           return result.json();

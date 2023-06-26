@@ -1,53 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include("./partials/head.ejs") %>
-<body>
+
  
-<body id="body">
+    <body id="body">
 
-    <%- include("./partials/header.ejs") %>
-    
-    <h1 id="alleAuftrag">Alle Aufträge</h1>
-
-   
-<div class="artikel_parent-open">
-    
- <% arrAuftrag.forEach(item =>{%>
-
-    
-<article class="artikel_table-open">
-    <table>
-        <thead>
-            <tr>
-                <th>Auftrag_ID</th>
-                <th>Kunde_ID</th>
-                <th>Lieferdatum</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><%= item.Auftrag_id %></td>
-                <td><%= item.Kunde_ID %></td>
-                <td><%= item.Lieferdatum %></td>
-                <td>  <a class="btn" href="/auftrag-informationen/<%= item._id %>">Mehr</a></td>
-            </tr>
+        <%- include("./partials/header.ejs") %>
         
-            
-        </tbody>
-    </table>
-</article>
-
-<% }); %>
-
-
-</div>
-<%- include("./partials/footer.ejs") %>
-
-
-<script>
-
-</script>
-</body>
+        <h1 id="alleAuftrag">Alle Aufträge</h1>
+    
+        <div class="artikel_parent-open">
+            <% arrAuftrag.sort((a, b) => new Date(a.Lieferdatum) - new Date(b.Lieferdatum)).forEach(item => {%>
+                <article class="artikel_table-open">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Auftrag_ID</th>
+                                <th>Kunde_ID</th>
+                                <th>Lieferdatum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><%= item.Auftrag_id %></td>
+                                <td><%= item.Kunde_ID %></td>
+                                <td><%= item.Lieferdatum %></td>
+                                <td>  <a class="btn" href="/auftrag-informationen/<%= item._id %>">Mehr</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+            <% }); %>
+        </div>
+        
+        <%- include("./partials/footer.ejs") %>
+    </body>
+    
 
 
 </html>
