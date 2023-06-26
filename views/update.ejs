@@ -9,57 +9,62 @@
     <main id="main">
       <h1 id="H_neuekunde">Update</h1>
       <section class="S_neuekunde">
-        <form id="updateForm" action="/alle" >
-          <label for="Auftrag_id">Auftrag_ID: </label>
-          <input name="Auftrag_id" id="Auftrag_id" type="text" />
+        <form id="meinFormular" action="/alle">
+          <label class="requerd" for="Auftrag_id">Auftrag_ID: </label>
+          <input class="input" name="Auftrag_id" id="Auftrag_id" required type="text" />
 
-          <label for="Kunde_ID">Kunde_ID: </label>
-          <input name="Kunde_ID" id="Kunde_ID" type="text" />
+          <label class="requerd" for="Kunde_ID">Kunde_ID: </label>
+          <input class="input" name="Kunde_ID" id="Kunde_ID" required type="text" />
 
-          <label for="Lieferdatum">Lieferdatum: </label>
-          <input name="Lieferdatum" id="Lieferdatum" type="date" />
-<div id="container">
-          <div class="auftragInput">
-            <div class="Marke_input">
-              <label for="auftrag_Info[0][Anzahl]">Anzahl: </label>
-              <input
-                name="auftrag_Info[0][Anzahl]"
-                id="anzahlId0"
-                type="number"
-                class="Anzahl"
-              />
-            </div>
-            <div class="Marke_input">
-              <label for="auftrag_Info[0][Teil_id]">Teil_id: </label>
-              <input
-                name="auftrag_Info[0][Teil_id]"
-                id="teilId0"
-                type="text"
-                class="Teil_id"
-              />
-            </div>
-            <div class="Marke_input">
-              <label for="auftrag_Info[0][ankommendeDatum]"
-                >Datum der ankommende Teile:
-              </label>
-              <input
-                name="auftrag_Info[0][ankommendeDatum]"
-                id="ankommenId0"
-                type="date"
-                class="ankommendeDatum"
-              />
-            </div>
-            <div class="Marke_input">
-              <label for="auftrag_Info[0][Vormerk]">Vormerk: </label>
-              <input
-                name="auftrag_Info[0][Vormerk]"
-                class="Vormerk"
-                type="text"
-              />
+          <label class="requerd" for="Lieferdatum">Lieferdatum: </label>
+          <input  name="Lieferdatum" id="Lieferdatum" required type="date" />
+          <div id="container">
+            <div class="auftragInput">
+              <div class="Marke_input">
+                <label class="requerd" for="auftrag_Info[0][Anzahl]"
+                  >Anzahl:
+                </label>
+                <input
+                  name="auftrag_Info[0][Anzahl]"
+                  id="anzahlId0"
+                  type="number"
+                  class="Anzahl"
+                  required
+                />
+              </div>
+              <div class="Marke_input">
+                <label class="requerd" for="auftrag_Info[0][Teil_id]"
+                  >Teil_id:
+                </label>
+                <input
+                  name="auftrag_Info[0][Teil_id]"
+                  id="teilId0"
+                  type="text"
+                  required
+                  class="input"
+                />
+              </div>
+              <div class="Marke_input">
+                <label for="auftrag_Info[0][ankommendeDatum]"
+                  >Datum der ankommende Teile:
+                </label>
+                <input
+                  name="auftrag_Info[0][ankommendeDatum]"
+                  id="ankommenId0"
+                  type="date"
+                  class="ankommendeDatum"
+                />
+              </div>
+              <div class="Marke_input">
+                <label for="auftrag_Info[0][Vormerk]">Vormerk: </label>
+                <input
+                  name="auftrag_Info[0][Vormerk]"
+                  class="Vormerk"
+                  type="text"
+                />
+              </div>
             </div>
           </div>
-        </div>
-         
 
           <button
             data-linkid="<%= obAuftrag._id %>"
@@ -72,7 +77,6 @@
         </form>
       </section>
       <script>
-        
         const btn = document.querySelector(".create");
         const obAuftragID = btn.getAttribute("data-linkid");
 
@@ -80,147 +84,138 @@
         let Kunde_ID = document.getElementById("Kunde_ID");
         let Lieferdatum = document.getElementById("Lieferdatum");
 
-        var auftrag_Info=[];
-        
+        var auftrag_Info = [];
+
         var Infolength;
-        
-        var anzahl=document.getElementById("anzahlId0");
-        var Teil_id=document.getElementById("teilId0");
-        var ankommenDatum=document.getElementById("ankommenId0");
-   
+
+        var anzahl = document.getElementById("anzahlId0");
+        var Teil_id = document.getElementById("teilId0");
+        var ankommenDatum = document.getElementById("ankommenId0");
+
         fetch(`/updateJson/${obAuftragID}`)
           .then((result) => {
             return result.json();
           })
           .then((data) => {
-      
-          
             _id = data._id;
-          
+
             Auftrag_id.setAttribute("value", data.Auftrag_id);
             Kunde_ID.setAttribute("value", data.Kunde_ID);
             Lieferdatum.setAttribute("value", data.Lieferdatum);
-        /*     Anzahl.setAttribute("value", data.auftrag_Info[0].Anzahl);
+            /*     Anzahl.setAttribute("value", data.auftrag_Info[0].Anzahl);
             Teil_id.setAttribute("value",data.auftrag_Info[0].Teil_id);
             ankommenDatum.setAttribute("value",data.auftrag_Info[0].ankommenDatum); */
             Infolength = data.auftrag_Info.length;
-            
-          
-            if(Infolength>0){
+
+            if (Infolength > 0) {
               var auftragDiv = document.getElementsByClassName("auftragInput");
-           
+
               var neuDiv;
-           
-          var container= document.getElementById("container");
-              for (let index = 0; index <Infolength-1; index++) {
-                    
-                    neuDiv=auftragDiv[0].cloneNode(true);
-                  
-                    var count = auftragDiv.length;
-             var labels = neuDiv.getElementsByTagName("label");
-            var inputs = neuDiv.getElementsByTagName("input");
-            
-            for (let index = 0; index < labels.length; index++) {
-            labels[index].htmlFor = labels[index].htmlFor.replace(
-              "0",
-              count.toString()
-            );
-         
-          }
-          for (let index = 0; index < inputs.length; index++) {
-            inputs[index].name = inputs[index].name.replace(
-              "0",
-              count.toString()
-            );
-            inputs[index].id = inputs[index].id.replace("0", count.toString());
-         
-          } 
-          
-          
 
-          container.appendChild(neuDiv);
-                     
+              var container = document.getElementById("container");
+              for (let index = 0; index < Infolength - 1; index++) {
+                neuDiv = auftragDiv[0].cloneNode(true);
 
-             }
-             
-for (var i = 0; i < Infolength; i++) {
+                var count = auftragDiv.length;
+                var labels = neuDiv.getElementsByTagName("label");
+                var inputs = neuDiv.getElementsByTagName("input");
 
-anzahl = document.getElementById(`anzahlId${i}`);
+                for (let index = 0; index < labels.length; index++) {
+                  labels[index].htmlFor = labels[index].htmlFor.replace(
+                    "0",
+                    count.toString()
+                  );
+                }
+                for (let index = 0; index < inputs.length; index++) {
+                  inputs[index].name = inputs[index].name.replace(
+                    "0",
+                    count.toString()
+                  );
+                  inputs[index].id = inputs[index].id.replace(
+                    "0",
+                    count.toString()
+                  );
+                }
 
-Teil_id = document.getElementById(`teilId${i}`);
-ankommendeDatum = document.getElementById(`ankommenId${i}`);
+                container.appendChild(neuDiv);
+              }
 
-anzahl.setAttribute("value", data.auftrag_Info[i].Anzahl);
+              for (var i = 0; i < Infolength; i++) {
+                anzahl = document.getElementById(`anzahlId${i}`);
 
-Teil_id.setAttribute("value", data.auftrag_Info[i].Teil_id);
-ankommendeDatum.setAttribute(
-  "value",
-  data.auftrag_Info[i].ankommendeDatum
-);
-var obj={};
-obj.anzahl=anzahl;
-obj.Teil_id=Teil_id;
-obj.ankommendeDatum=ankommenDatum;
-auftrag_Info.push(obj);
-auftrag_Info.forEach((element) => {
-  console.log(element);
-})
-}
+                Teil_id = document.getElementById(`teilId${i}`);
+                ankommendeDatum = document.getElementById(`ankommenId${i}`);
 
+                anzahl.setAttribute("value", data.auftrag_Info[i].Anzahl);
+
+                Teil_id.setAttribute("value", data.auftrag_Info[i].Teil_id);
+                ankommendeDatum.setAttribute(
+                  "value",
+                  data.auftrag_Info[i].ankommendeDatum
+                );
+                var obj = {};
+                obj.anzahl = anzahl;
+                obj.Teil_id = Teil_id;
+                obj.ankommendeDatum = ankommenDatum;
+                auftrag_Info.push(obj);
+                auftrag_Info.forEach((element) => {
+                  console.log(element);
+                });
+              }
             }
-
-    
           });
 
-      
-          
-        const form = document.getElementById("updateForm");
+        const form = document.getElementById("meinFormular");
 
         form.addEventListener("submit", (event) => {
-          event.preventDefault();
-          const kundeId=Kunde_ID.value;
-          const auftragsId=Auftrag_id.value;
+          
+          
+          if (anzahl.value < 0 || isNaN(anzahl.value || Teil_id<0 || Auftrag_id<0 || Kunde_ID<0)) {
+          event.preventDefault(); // Submit-Ereignis abbrechen
+          anzahl.value = ""; // Eingabe löschen
+          alert("Sie haben Negative Zahl oder Ein Zeichen eingegeben!!");
+        }
+        event.preventDefault();
+          const kundeId = Kunde_ID.value;
+          const auftragsId = Auftrag_id.value;
           const LieferdatumUpdate = Lieferdatum.value;
-          var AnzahlUpdate, Teil_idUpdate,ankommendeDatumUpdate;
+          var AnzahlUpdate, Teil_idUpdate, ankommendeDatumUpdate;
 
           const id = _id;
-          
-          const auftrag_InfoUpadat=[];
-   
-           for (let index = 0; index <  Infolength; index++) {
-            const objUp={};
-            objUp.AnzahlUpdate = auftrag_Info[index].anzahl.value;
-            
-            objUp.Teil_idUpdate = auftrag_Info[index].Teil_id.value;
-           objUp.ankommendeDatumUpdate = auftrag_Info[index].ankommendeDatum.value;
-           auftrag_InfoUpadat.push(objUp);
-           }
-          
-           auftrag_InfoUpadat.forEach((element) => {
-            console.log(element);
-           })
-         
-          console.log(AnzahlUpdate);
-          
-          
-      
 
-           
-           console.log(auftrag_InfoUpadat);
-          
-          console.log("Sending"+ JSON.stringify());
+          const auftrag_InfoUpadat = [];
+
+          for (let index = 0; index < Infolength; index++) {
+            const objUp = {};
+            objUp.AnzahlUpdate = auftrag_Info[index].anzahl.value;
+
+            objUp.Teil_idUpdate = auftrag_Info[index].Teil_id.value;
+            objUp.ankommendeDatumUpdate =
+              auftrag_Info[index].ankommendeDatum.value;
+            auftrag_InfoUpadat.push(objUp);
+          }
+
+          auftrag_InfoUpadat.forEach((element) => {
+            console.log(element);
+          });
+
+          console.log(AnzahlUpdate);
+
+          console.log(auftrag_InfoUpadat);
+
+          console.log("Sending" + JSON.stringify());
           var daten = JSON.stringify({
-              _id,
-              auftragsId,
-              kundeId,
-              LieferdatumUpdate,
-              
-             auftrag_InfoUpadat
-            })
+            _id,
+            auftragsId,
+            kundeId,
+            LieferdatumUpdate,
+
+            auftrag_InfoUpadat,
+          });
           console.log(daten);
 
           fetch(`/update/${id}`, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
@@ -228,7 +223,7 @@ auftrag_Info.forEach((element) => {
           })
             .then((response) => response.json())
             .then((data) => {
-              (window.location.href = data.Link)
+              window.location.href = data.Link;
             })
             .catch((error) => {
               console.error("Error:", error);

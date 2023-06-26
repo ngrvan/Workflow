@@ -53,18 +53,18 @@
           })
           .then((data) => {
             data.forEach((element) => {
-              console.log(element.Auftrag_id);
-              //console.log("Jiro Id"+element._id);
+              //console.log(element.Auftrag_id);
+             //console.log("Jiro Id"+element._id);
 
               if ((parseInt(eingegebenerText)=== element.Auftrag_id) || ((parseInt(kundeIdInputValue)=== element.Kunde_ID))) {
-                console.log(eingegebenerText);
-               console.log("Jiro Id"+element._id);
+                //console.log(eingegebenerText);
+               //console.log("Jiro Id"+element._id);
                 meineURL = `/auftrag-informationen/${element._id}`;
-                console.log(meineURL);
+                //console.log(meineURL);
 
                 window.location.href = meineURL;
               }else{
-                window.location.href="/not-fund";
+               // window.location.href="/404";
               }
             });
           });

@@ -3,12 +3,18 @@
 const express = require("express");
 const app = express();
 const port = 5000;
+const bodyParser=require("body-parser");
+
+const api=` http://localhost:${port}`;
+const cors= require("cors");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 const Auftrag = require("./models/auftragSchema");
-
+const auftragController=require("./controllers/auftragControllers");
 
 
 // for auto refresh
@@ -37,7 +43,7 @@ const start =async()=> {
   try {
     await connectDB()
     app.listen(port, () => {
-      console.log(`Example app listening at http://localhost:${port}`);
+      console.log(`Example app listening at ${api}`);
     });
   } catch (error) {
     console.log(error);
@@ -56,124 +62,117 @@ app.get("/add-new-article", (req, res) => {
   res.render("add-new-article", { mytite: "Neuer-Auftrag" });
 });
 
-app.get("/Suche", (req, res) => {
-  res.render("suche", { mytite: "Suche" });
- 
-});
+app.get("/Suche", auftragController.suche_auftrag_get);
 //REST API Funkion
-app.get("/auftragInfo/:id",(req, res) => {
-  Auftrag.findById(req.params.id)
-    .then((result) => {
-     res.setHeader("content-type", "application/json");
-     res.send(JSON.stringify(result));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  
-})
-app.get("/auftragArry",(req, res) => {
-  Auftrag.find()
-    .then((result) => {
-     res.setHeader("content-type", "application/json");
-     res.send(JSON.stringify(result));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  
-})
+app.get("/auftragInfo/:id",auftragController.auftrag_json_info_get)
+app.get("/auftragArry",auftragController.alle_auftraege_json_get)
 
-app.get("/auftrag-informationen/:id", (req, res) => {
-  Auftrag.findById(req.params.id)
-    .then((result) => {
-      res.render("information", {
-        mytite: "Auftrag-Inrformation",
-        objekt_Auftrag: result,
-       
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-   
+app.get("/auftrag-informationen/:id",auftragController.auftrag_id_information_get  );
+
+app.delete("/auftrag-informationen/:id", auftragController.delete_auftrag_id_delete  );
+
+
+app.get("/update/:id",auftragController.update_auftrag_id_get  );
+
+
+
+app.get("/updateJson/:id",auftragController.auftrag_update_jsonId_get)
+app.put(`/update/:id`, auftragController.update_auftrag_id_put);
+
+
+/* app.put(`/update/:id`, (req,res ) => {
+ 
+    console.log(req.body);
+    let neuAuftrag=req.body;
+    let kundeId=neuAuftrag.kundeId;
+    let auftragId=neuAuftrag.auftragsId;
+    let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
     
   
-});
-
-app.delete("/auftrag-informationen/:id", (req, res) => {
-  Auftrag.findByIdAndDelete(req.params.id)
+    const id = req.params.id;
+  
+  
+    let info=neuAuftrag.auftrag_InfoUpadat;
+    var AnzahlUpdate;
+    var Teil_idUpdate
+  
+  
+    var ankommendeDatumUpdate;
+  for (let index = 0; index < info.length; index++) {
+    
+     AnzahlUpdate=info[index].AnzahlUpdate;
+     Teil_idUpdate=info[index].Teil_idUpdate;
+     ankommendeDatumUpdate=info[index].ankommendeDatumUpdate;
+  console.log("anzahl :" + AnzahlUpdate + " teil: " + Teil_idUpdate + " ankommen : " + ankommendeDatumUpdate);
+  
+  
+  
+    Auftrag.updateOne({_id:id},{$set:{Auftrag_id: auftragId,Kunde_ID: kundeId,Lieferdatum:LieferdatumUpdate,auftrag_Info:[{Anzahl:AnzahlUpdate,
+      Teil_id:Teil_idUpdate, ankommendeDatum:ankommendeDatumUpdate}]}})
     .then((result) => {
       res.json({ Link: "/alle" });
-    })
-    .catch((err) => {
+    }).catch((err) => {
       console.log(err);
-    });
-});
-
-
-app.get("/update/:id",(req, res) => {
- 
-  Auftrag.findById(req.params.id)
-  .then((result) => {
-    res.render("update", { mytite: "Update", obAuftrag: result });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-});
-app.get("/updateJson/:id",(req, res) => {
-  Auftrag.findById(req.params.id)
-    .then((result) => {
-     res.setHeader("content-type", "application/json");
-     res.send(JSON.stringify(result));
     })
-    .catch((err) => {
-      console.log(err);
-    });
+  }
   
-})
-
-
-
-app.put(`/update/:id`,async (req,res ) => {
- 
-//  console.log(req.body);
-  let neuAuftrag=req.body;
-  let kundeId=neuAuftrag.kundeId;
-  let auftragId=neuAuftrag.auftragsId;
-  let LieferdatumUpdate=neuAuftrag.LieferdatumUpdate;
+  
+  
+  }) */
+   /* app.put(`/update/:id`, (req, res) => {
+    console.log(req.body);
+    let neuAuftrag = req.body;
+    let kundeId = neuAuftrag.kundeId;
+    let auftragId = neuAuftrag.auftragsId;
+    let LieferdatumUpdate = neuAuftrag.LieferdatumUpdate;
+  
+    const id = req.params.id;
+  
+    let info = neuAuftrag.auftrag_InfoUpadat;
+    let updatePromises = []; // Array für die Promises der Aktualisierungen
+  
+    for (let index = 0; index < info.length; index++) {
+      let AnzahlUpdate = info[index].AnzahlUpdate;
+      let Teil_idUpdate = info[index].Teil_idUpdate;
+      let ankommendeDatumUpdate = info[index].ankommendeDatumUpdate;
+      console.log("anzahl: " + AnzahlUpdate + ", teil: " + Teil_idUpdate + ", ankommen: " + ankommendeDatumUpdate);
+  
+      // Aktualisierte Objektstruktur
+      let updatedObject = {
+        Anzahl: AnzahlUpdate,
+        Teil_id: Teil_idUpdate,
+        ankommendeDatum: ankommendeDatumUpdate
+      };
+  
+      // Aktualisierung durch Hinzufügen des neuen Objekts zum vorhandenen Array
+      updatePromises.push(
+        Auftrag.updateOne(
+          { _id: id },
+          {
+            $set: {
+              Auftrag_id: auftragId,
+              Kunde_ID: kundeId,
+              Lieferdatum: LieferdatumUpdate,
+            },
+            $push: { auftrag_Info: updatedObject } // Hinzufügen des neuen Objekts zum Array
+          }
+        )
+      );
+    }
+  
+    Promise.all(updatePromises)
+      .then((results) => {
+        res.json({ Link: "/alle" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: "Fehler beim Aktualisieren des Auftrags" });
+      });
+  });  */
+  
   
 
-  const id = req.params.id;
-
-
-  let info=neuAuftrag.auftrag_InfoUpadat;
-  var AnzahlUpdate;
-  var Teil_idUpdate
-
-
-  var ankommendeDatumUpdate;
-for (let index = 0; index < info.length; index++) {
   
-   AnzahlUpdate=info[index].AnzahlUpdate;
-   Teil_idUpdate=info[index].Teil_idUpdate;
-   ankommendeDatumUpdate=info[index].ankommendeDatumUpdate;
-console.log("anzahl :" + AnzahlUpdate + " teil: " + Teil_idUpdate + " ankommen : " + ankommendeDatumUpdate);
-
-}
-
-  Auftrag.updateOne({_id:id},{$set:{Auftrag_id: auftragId,Kunde_ID: kundeId,Lieferdatum:LieferdatumUpdate,auftrag_Info:[{Anzahl:AnzahlUpdate,
-    Teil_id:Teil_idUpdate, ankommendeDatum:ankommendeDatumUpdate}]}})
-  .then((result) => {
-    res.json({ Link: "/alle" });
-  }).catch((err) => {
-    console.log(err);
-  })
-
-
-
-})
 start();
 
 

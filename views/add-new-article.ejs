@@ -9,32 +9,50 @@
     <main id="main">
       <h1 id="H_neuekunde">Neue Auftrag erstellen</h1>
       <section class="S_neuekunde">
-        <form method="post" action="/alle">
-          <label for="Auftrag_id">Auftrag_ID: </label>
-          <input name="Auftrag_id" id="Auftrag_id" type="text" />
+        <form id="meinFormular" method="post" action="/alle">
+          <label class="requerd" for="Auftrag_id">Auftrag_ID: </label>
+          <input
+            class="input"
+            name="Auftrag_id"
+            required
+            id="Auftrag_id"
+            type="text"
+          />
 
-          <label for="Kunde_ID">Kunde_ID: </label>
-          <input name="Kunde_ID" id="Kunde_ID" type="text" />
+          <label class="requerd" for="Kunde_ID">Kunde_ID: </label>
+          <input
+            class="input"
+            name="Kunde_ID"
+            id="Kunde_ID"
+            required
+            type="text"
+          />
 
-          <label for="Lieferdatum">Lieferdatum: </label>
-          <input name="Lieferdatum" id="Lieferdatum" type="date" />
+          <label class="requerd" for="Lieferdatum">Lieferdatum: </label>
+          <input name="Lieferdatum" id="Lieferdatum" required type="date" />
 
           <div class="auftragInput">
-
             <div class="Marke_input">
-              <label for="auftrag_Info[0][Anzahl]">Anzahl: </label>
+              <label class="requerd" for="auftrag_Info[0][Anzahl]"
+                >Anzahl:
+              </label>
               <input
                 name="auftrag_Info[0][Anzahl]"
                 class="Anzahl"
                 type="number"
+                id="anzahl"
+                required
               />
             </div>
             <div class="Marke_input">
-              <label for="auftrag_Info[0][Teil_id]">Teil_id: </label>
+              <label class="requerd" for="auftrag_Info[0][Teil_id]"
+                >Teil_id:
+              </label>
               <input
                 name="auftrag_Info[0][Teil_id]"
-                class="Teil_id"
+                class="input"
                 type="text"
+                required
               />
             </div>
             <div class="Marke_input">
@@ -48,9 +66,7 @@
               />
             </div>
             <div class="Marke_input">
-              <label for="auftrag_Info[0][Vormerk]"
-                >Vormerk:
-              </label>
+              <label for="auftrag_Info[0][Vormerk]">Vormerk: </label>
               <input
                 name="auftrag_Info[0][Vormerk]"
                 class="Vormerk"
@@ -59,43 +75,59 @@
             </div>
           </div>
 
-        
-
           <span class="material-symbols-outlined icon" id="iconId"> add </span>
 
-       
-
-          <button id="saveButton" class="create">create</button>
+          <button type="submit" id="saveButton" class="create">create</button>
         </form>
       </section>
     </main>
 
-  <script>
-    
-    let icon=document.getElementById("iconId");
+    <script>
+      let icon = document.getElementById("iconId");
 
-    icon.onclick=function(){
-      let auftragDiv= document.getElementsByClassName("auftragInput");
-      let count=auftragDiv.length;
-      let neuDiv= auftragDiv[0].cloneNode(true);
-      let labels= neuDiv.getElementsByTagName("label");
-      let inputs=neuDiv.getElementsByTagName("input");
-      for (let index = 0; index < labels.length; index++) {
-        labels[index].htmlFor = labels[index].htmlFor.replace("0",count.toString());
-      }
-      for (let index = 0; index < inputs.length; index++) {
-        inputs[index].name = inputs[index].name.replace("0",count.toString());
-      }
-       
+      icon.onclick = function () {
+        let auftragDiv = document.getElementsByClassName("auftragInput");
+        let count = auftragDiv.length;
+        let neuDiv = auftragDiv[0].cloneNode(true);
+        let labels = neuDiv.getElementsByTagName("label");
+        let inputs = neuDiv.getElementsByTagName("input");
+        for (let index = 0; index < labels.length; index++) {
+          labels[index].htmlFor = labels[index].htmlFor.replace(
+            "0",
+            count.toString()
+          );
+        }
+        for (let index = 0; index < inputs.length; index++) {
+          inputs[index].name = inputs[index].name.replace(
+            "0",
+            count.toString()
+          );
+        }
 
-      
-      
-      document.getElementById("iconId").before(neuDiv);
-      
-    }
-    
+        document.getElementById("iconId").before(neuDiv);
+      };
+      const form = document.getElementById("meinFormular");
+      const inputFields = document.getElementsByClassName("input");
+      const anzahl = document.getElementById("anzahl");
 
-  </script>
+      form.addEventListener("submit", (event) => {
+        for (let i = 0; i < inputFields.length; i++) {
+          const input = inputFields[i];
+
+          // Eingabe überprüfen und anpassen
+          if (input.value < 0) {
+            input.value = "";
+            alert("Sie haben Negative Zahl eingegeben!!");
+          }
+        }
+        // Eingabe überprüfen
+        if (anzahl.value < 0 || isNaN(anzahl.value)) {
+          event.preventDefault(); // Submit-Ereignis abbrechen
+          anzahl.value = ""; // Eingabe löschen
+          alert("Sie haben Negative Zahl oder Ein Zeichen eingegeben!!");
+        }
+      });
+    </script>
   </body>
 
   <%- include("./partials/footer.ejs") %>

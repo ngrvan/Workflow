@@ -1,6 +1,10 @@
 const mongoose=require("mongoose");
 
-const connectionString="mongodb+srv://ngrvannnyosef:rLw23eJyX8b4GcIU@cluster0.ukwwlm4.mongodb.net/alldata?retryWrites=true&w=majority";
+const username="ngrvannnyosef";
+const password="rLw23eJyX8b4GcIU";
+const database="alldata";
+
+const connectionString=`mongodb+srv://${username}:${password}@cluster0.ukwwlm4.mongodb.net/${database}?retryWrites=true&w=majority`;
 
 const connectDB=(url)=> {
     return mongoose.connect(connectionString,{
