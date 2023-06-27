@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= mytite %></title>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/neueKundeStyle.css" />
+    
+
+ 
+</head>
 
   <body id="body">
     <%- include("./partials/header.ejs") %>
-
+ 
     <main id="main">
       <h1 id="H_neuekunde">Suche</h1>
       <section class="S_neuekunde">
@@ -22,13 +35,13 @@
           <button id="suchButton"  class="create">suche</button>
         </form>
       </section>
-      <div id="ergebnis"></div>
+     
     </main>
 
     <%-include("./partials/footer.ejs")%>
 
-    <script>
-      let inputId = document.getElementById("Auftrag_ID");
+    <script src="../js/sucheScript.js" >
+    let inputId = document.getElementById("Auftrag_ID");
       let inputKunde= document.getElementById("Kunde_ID");
       var meinFormular = document.getElementById("meinFormular");
 
@@ -36,39 +49,52 @@
       var suchButton = document.getElementById("suchButton");
       var kundeIdInputValue="";
       var eingegebenerText = "";
-      inputId.addEventListener("input", function (event) {
-        eingegebenerText = event.target.value;
-      });
-      inputKunde.addEventListener("input", function (event) {
-        kundeIdInputValue = event.target.value;
-      });
 
       suchButton.addEventListener("click", function (event) {
         event.preventDefault();
         console.log("Eingegebener Text:", eingegebenerText);
  
+        kundeIdInputValue = document.getElementById("Kunde_ID").value;
+        eingegebenerText = document.getElementById("Auftrag_ID").value;
+        console.log("TEXT: " + eingegebenerText);
+
+        var AuftragIDGefunden = false;
         fetch(`/auftragArry`)
           .then((result) => {
             return result.json();
           })
           .then((data) => {
+
+            var objekteFuerKunde = [];
             data.forEach((element) => {
               //console.log(element.Auftrag_id);
              //console.log("Jiro Id"+element._id);
-
-              if ((parseInt(eingegebenerText)=== element.Auftrag_id) || ((parseInt(kundeIdInputValue)=== element.Kunde_ID))) {
+            
+              if ((parseInt(eingegebenerText)=== element.Auftrag_id) ) {
                 //console.log(eingegebenerText);
                //console.log("Jiro Id"+element._id);
+                console.log("fall gefunden");
+                AuftragIDGefunden = true;
                 meineURL = `/auftrag-informationen/${element._id}`;
-                //console.log(meineURL);
-
                 window.location.href = meineURL;
-              }else{
-               // window.location.href="/404";
               }
-            });
+              if(((parseInt(kundeIdInputValue)=== element.Kunde_ID))){
+                objekteFuerKunde.push(element);               
+              }
+           });
+
+           if(AuftragIDGefunden == false){           
+              var toJson = JSON.stringify(objekteFuerKunde);
+              meineURL = `/suche/${toJson}`;
+              window.location.href = meineURL; 
+          }   
+           
+          
+
+           //post request
+
           });
-        });
+        });  
     </script>
   </body>
 </html>

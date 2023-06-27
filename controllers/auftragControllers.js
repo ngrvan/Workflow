@@ -74,7 +74,66 @@ const auftrag_update_jsonId_get=(req, res) => {
       });
     
   }
-const update_auftrag_id_put=(req, res) => {
+
+  const update_auftrag_id_put=(req, res) => {
+    console.log(req.body);
+    let neuAuftrag = req.body;
+    let kundeId = neuAuftrag.kundeId;
+    let auftragId = neuAuftrag.auftragsId;
+    let LieferdatumUpdate = neuAuftrag.LieferdatumUpdate;
+  
+    const id = req.params.id;
+  
+    let info = neuAuftrag.auftrag_InfoUpadat;
+    let updatePromises = []; // Array für die Promises der Aktualisierungen
+  
+
+    var auftrag_Info = [];
+    for (let index = 0; index < info.length; index++) {
+      let AnzahlUpdate = info[index].AnzahlUpdate;
+      let Teil_idUpdate = info[index].Teil_idUpdate;
+      let ankommendeDatumUpdate = info[index].ankommendeDatumUpdate;
+      console.log("anzahl: " + AnzahlUpdate + ", teil: " + Teil_idUpdate + ", ankommen: " + ankommendeDatumUpdate);
+  
+      // Aktualisierte Objektstruktur
+      let updatedObject = {
+        Anzahl: AnzahlUpdate,
+        Teil_id: Teil_idUpdate,
+        ankommendeDatum: ankommendeDatumUpdate
+      };
+      auftrag_Info.push(updatedObject);
+      // Aktualisierung durch Aktualisierung des entsprechenden Objekts im Array
+    }
+    console.log("INFO:");
+    console.log(auftrag_Info);
+
+    updatePromises.push(
+      Auftrag.updateOne(
+        { 
+          _id: id
+        },
+        {
+          $set: {
+            Auftrag_id: auftragId,
+            Kunde_ID: kundeId,
+            Lieferdatum: LieferdatumUpdate,
+            auftrag_Info: auftrag_Info
+          }
+        }
+      )
+    );
+
+    Promise.all(updatePromises)
+      .then((results) => {
+        res.json({ Link: "/alle" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: "Fehler beim Aktualisieren des Auftrags" });
+      });
+  }
+
+/*const update_auftrag_id_put=(req, res) => {
   console.log(req.body);
   let neuAuftrag = req.body;
   let kundeId = neuAuftrag.kundeId;
@@ -105,7 +164,7 @@ const update_auftrag_id_put=(req, res) => {
         { 
           _id: id,
           auftrag_Info: {
-            $elemMatch: { Teil_id: Teil_idUpdate } // Filtert das Array nach Teil_id
+            $elemMatch: { _id: _id } // Filtert das Array nach Teil_id
           } 
         },
         {
@@ -130,7 +189,22 @@ const update_auftrag_id_put=(req, res) => {
       console.log(err);
       res.status(500).json({ error: "Fehler beim Aktualisieren des Auftrags" });
     });
+}*/
+const kundeid_auftraege_get=(req, res) => {
+ 
+  var auftragsDaten = JSON.parse(req.params.json);
+  res.render("alle", { mytite: "Suchergebnis", arrAuftrag: auftragsDaten });
+  //console.log(auftragsDaten);
+
+  /*Auftrag.find()
+    .then((result) => {
+      res.render("alle", { mytite: "Suchergebnis", arrAuftrag: result });
+    })
+    .catch((err) => {s
+      console.log(err);
+    });*/
 }
+
 const alle_auftraege_get=(req, res) => {
     Auftrag.find()
       .then((result) => {
@@ -161,5 +235,6 @@ const add_auftrag_post=(req, res) => {
     update_auftrag_id_put,
     alle_auftraege_get,
     add_auftrag_post,
-    suche_auftrag_get
+    suche_auftrag_get,
+    kundeid_auftraege_get
 }

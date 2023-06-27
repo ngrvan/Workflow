@@ -1,0 +1,54 @@
+#alleAuftrag{
+    border: 2px solid black;
+  margin-bottom: 30px;
+  background-color: #3d4a59;
+  color: white;
+  border-radius:0 0 50px 50px;
+  
+  }
+  
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border: 1px solid black;
+    
+    }
+     
+    
+th {
+    background-color: #3d4a59;
+    color: #fff;
+    }
+    
+
+.artikel_table-open table{
+    width:200px;
+    padding: 10px;
+    background-color: #7599c2;
+    margin: 5px;
+    border-radius: 7px;
+    }
+    
+.artikel_parent-open{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    }
+    
+.mehr{
+    background-color: rgb(140, 140, 148);
+    }
+    
+.btn {
+    font-weight: 700;
+    float: right;
+    background-color:blue;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 10px;
+    }
+    

@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
+  
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= mytite %></title>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/infoStyle.css" />
+  
+
+
+</head>
 
   <body>
     <%- include("./partials/header.ejs") %>
@@ -149,8 +163,9 @@
         </p>
       </div>
     </div>
-    <a href="/update/<%= objekt_Auftrag._id %>" id="update" >Update</a>
+    
     <div class="button">
+    <a href="/update/<%= objekt_Auftrag._id %>" id="update" >Update</a>
     <button data-linkid="<%= objekt_Auftrag._id %>" class="Delete">
       Löschen
     </button>
@@ -180,7 +195,7 @@
           .then((data) => {
             data.auftrag_Info.forEach((element) => {
               var str = element.Teil_id.substring(0, 3);
-              console.log(element);
+              //console.log(element);
               //console.log(str);
               if (element.Teil_id.includes(obj.value) && str === "DSK") {
                 //console.log(element);
@@ -241,9 +256,9 @@
           return result.json();
         })
         .then((data) => {
-          console.log(data);
+         // console.log(data);
           data.auftrag_Info.forEach((auftrag) => {
-            console.log(data);
+          //  console.log(data);
             const str = auftrag.Teil_id.substring(0, 3);
             const text = auftrag.Teil_id;
             const lastTenChars = text.slice(-7);

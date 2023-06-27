@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-const Auftrag = require("./models/auftragSchema");
+
 const auftragController=require("./controllers/auftragControllers");
 
 
@@ -74,12 +74,13 @@ app.delete("/auftrag-informationen/:id", auftragController.delete_auftrag_id_del
 
 app.get("/update/:id",auftragController.update_auftrag_id_get  );
 
+app.get('/js/sucheScript.js', function(req, res) {     res.sendFile("C:/test/Workflow/js/sucheScript.js"); }); 
+
+app.get("/updateJson/:id",auftragController.auftrag_update_jsonId_get);
 
 
-app.get("/updateJson/:id",auftragController.auftrag_update_jsonId_get)
-app.put(`/update/:id`, auftragController.update_auftrag_id_put);
-
-
+app.put("/update/:id",auftragController.update_auftrag_id_put);
+app.get("/suche/:json",auftragController.kundeid_auftraege_get )
 /* app.put(`/update/:id`, (req,res ) => {
  
     console.log(req.body);

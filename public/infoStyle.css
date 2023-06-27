@@ -1,0 +1,50 @@
+
+
+
+.abteilung_container{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    }
+    .Service_Disk, .System_Configiration,.Profisional_Services,.Logistik{
+    border: 2px solid black;
+    width: 300px;
+    background-color:#3d4a59;
+    color: #f3eded;
+    margin-left: 10px;
+    margin-top: 200px;
+    padding: 5px;
+    
+    }
+    
+
+ .abteilung_container div p{
+    padding-bottom: 15px;
+    } 
+    .Delete{
+    background-color: red;
+    margin-left: auto;
+    margin-top: auto;
+    position: fixed;
+    }
+    .Delete:hover{
+    background-color: white;
+    margin-left: auto;
+    margin-top: auto;
+    position: fixed;
+    cursor: pointer;
+    }
+    .card p{
+        display: inline-block;
+        margin-left: 200px;
+        border: 2px solid black;
+        margin-top: 20px;
+        margin-right: auto;
+        padding-top: 10px;
+        width: 300px;
+        height: 40px;
+        border-radius: 15px;
+        background-color: #3d4a59;
+        color: #fff;
+        text-align: center;
+        } 

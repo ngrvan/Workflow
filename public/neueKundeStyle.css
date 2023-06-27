@@ -1,0 +1,124 @@
+#H_neuekunde{
+
+    color: white;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-color: #3d4a59;
+    margin-top: 30px;
+    }
+    
+form{
+    width: fit-content;
+    margin: auto;
+    } 
+    
+input, label{
+    border-radius: 6px;
+    display:block;
+    width: 300px;
+    height: 35px;
+    } 
+    
+label {
+    margin-bottom: 14px;
+    margin-top: 30px;
+    font-size: 23px;
+    font-weight: 400;
+    
+    width: auto;
+    } 
+    .S_neuekunde .requerd::after{
+        content: "*";
+        color: red;
+      }
+      input {
+        border: 1px solid gray;
+        font-size: 20px;
+        }
+        .create {
+            all: unset;
+            background-color: rgb(255, 62, 62);
+            color: #fff;
+            margin-top: 20px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            display: block;
+            font-size: 25px;
+            margin-left: 100%;
+            margin-bottom: 50px;
+            }
+            
+
+.create:hover {
+    background-color: rgb(214, 55, 55);
+    font-size: 26px;
+    cursor: pointer;
+    }
+    
+    
+    .create:active {
+    transform: scale(0.9);
+    background-color: tomato;
+    }
+    .S_neuekunde{
+    
+    padding: 15px;
+    }
+    
+.auftragInput {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .Marke_input{
+  
+    flex: 1 0 50%; /* Hier kannst du die Breite anpassen */
+    margin-bottom: 10px;
+  padding: 20px;
+  
+  
+  }
+  .Marke_input label {
+    display: inline-block;
+    width: 30%; 
+    text-align: right;
+    margin-right: 10px;
+  }
+  
+  .Marke_input input {
+    width: 65%;
+  }
+  .auftragInput {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .auftragInput label {
+    flex:0 0 30%;
+    text-align: right;
+    margin-left: px;
+  }
+  
+  .auftragInput input {
+    flex: 1;
+  }
+  
+
+#iconId:hover{
+    cursor: pointer;
+    background-color: #3d4a59;
+    border: 2px solid ;
+  }
+  
+#update{
+    border: 2px solid black;
+    background-color: red;
+    color: #0d0d0d;
+    text-decoration: none;
+  }
+  #update:hover{
+  background-color: #f3eded;
+  }
+  .button{
+    display: inline;
+  }

@@ -50,267 +50,50 @@ margin-bottom: 35px;
 h1:hover{
   cursor: pointer;
 }
-#alleAuftrag{
-  border: 2px solid black;
-margin-bottom: 30px;
-background-color: #3d4a59;
-color: white;
-border-radius:0 0 50px 50px;
-
-}
-
-.tabel{
-width: 75%;
-display: flex;
-justify-content: space-around;
-padding: 5px;
-margin-left: 10px;
-
-}
-.kontakt{
-border: 2px solid #3d4a59;
-width: 25%;
-display: grid;
-border-radius: 5px;
-
-}
-
-
+/* Kontackt Style */
 article div{
 
-border-radius: 5px;
-padding: 5px;
-box-shadow: 5px 5px 5px gray;
-}
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 5px 5px 5px gray;
+  }  
+  h2{
 
- h2{
-
-text-align: center;
-margin-bottom: 20px;
-border: 2px solid #3d4a59;
-margin-left: auto;
-margin-right: auto;
-width: 300px;
-border-radius: 15px;
-background-color: #3d4a59;
-color: #fff;
-
-}
-footer{
-
-text-align: center;
-background-color: #3d4a59;
-color: white;
-padding: 15px;
-border-top-left-radius: 35px;
-border-top-right-radius: 35px;
-position: fixed;
-bottom: 0;
-width: 100%;
-}
-
-
-
-
-table {
-width: 100%;
-border-collapse: collapse;
-}
-th, td {
-padding: 8px;
-text-align: center;
-border-bottom: 1px solid #ddd;
-border: 1px solid black;
-
-}
-
-th {
-background-color: #3d4a59;
-color: #fff;
-}
-
-main{
-height: 100vh;
-}
-
-/* Neuer Kunde, Neuer Auftrag */
+    text-align: center;
+    margin-bottom: 20px;
+    border: 2px solid #3d4a59;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    border-radius: 15px;
+    background-color: #3d4a59;
+    color: #fff;
+    
+    }
+    footer{
+    
+    text-align: center;
+    background-color: #3d4a59;
+    color: white;
+    padding: 15px;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    }
+    
+ table {
+  width: 100%;
+  border-collapse: collapse;
+  } 
+    
 
 
-#H_neuekunde{
-
-color: white;
-border: 2px solid black;
-border-radius: 15px;
-background-color: #3d4a59;
-margin-top: 30px;
-}
-
-form{
-width: fit-content;
-margin: auto;
-}
-input, label, textarea{
-border-radius: 6px;
-display:block;
-width: 300px;
-height: 35px;
-}
-label {
-margin-bottom: 14px;
-margin-top: 30px;
-font-size: 23px;
-font-weight: 400;
-
-width: auto;
-}
-.S_neuekunde .requerd::after{
-  content: "*";
-  color: red;
-}
-input {
-border: 1px solid gray;
-font-size: 20px;
-}
-textarea {
-height: 170px !important;
-width: 370px !important;
-font-size: 20px;
-}
-.create {
-all: unset;
-background-color: rgb(255, 62, 62);
-color: #fff;
-margin-top: 20px;
-padding: 3px 10px;
-border-radius: 6px;
-display: block;
-font-size: 25px;
-margin-left: 100%;
-margin-bottom: 50px;
-}
 
 
-.create:hover {
-background-color: rgb(214, 55, 55);
-font-size: 26px;
-cursor: pointer;
-}
 
 
-.create:active {
-transform: scale(0.9);
-background-color: tomato;
-}
-.S_neuekunde{
-
-padding: 15px;
-}
-.Marke_input{
 
 
-padding: 20px;
 
-
-}
-.Anzahl{
-margin-bottom: 20px;
-}
-.artikel_table-open table{
-width:200px;
-padding: 10px;
-background-color: #7599c2;
-margin: 5px;
-border-radius: 7px;
-}
-.artikel_table{
-padding: 10px;
-}
-.artikel_parent-open{
-display: flex;
-padding: 10px;
-margin: 10px;
-
-}
-
-.mehr{
-background-color: rgb(140, 140, 148);
-}
-
-.btn {
-font-weight: 700;
-float: right;
-background-color:blue;
-text-decoration: none;
-border-radius: 5px;
-color: white;
-font-size: 10px;
-}
-
-
-.abteilung_container{
-display: flex;
-justify-content: space-between;
-margin-right: 10px;
-}
-.Service_Disk, .System_Configiration,.Profisional_Services,.Logistik{
-border: 2px solid black;
-width: 300px;
-background-color:#3d4a59;
-color: #f3eded;
-margin-left: 10px;
-margin-top: 200px;
-padding: 5px;
-
-}
-.abteilung_container div p{
-padding-bottom: 15px;
-}
-.Delete{
-background-color: red;
-margin-left: auto;
-margin-top: auto;
-position: fixed;
-}
-.Delete:hover{
-background-color: white;
-margin-left: auto;
-margin-top: auto;
-position: fixed;
-cursor: pointer;
-}
-
-.erste_input,.zweite_input{
-display: flex;
-}
-
-.card p{
-display: inline-block;
-margin-left: 200px;
-border: 2px solid black;
-margin-top: 20px;
-margin-right: auto;
-padding-top: 10px;
-width: 300px;
-height: 40px;
-border-radius: 15px;
-background-color: #3d4a59;
-color: #fff;
-text-align: center;
-}
-#iconId:hover{
-  cursor: pointer;
-  background-color: #3d4a59;
-  border: 2px solid ;
-}
-.button{
-  display: inline;
-}
-#update{
-  border: 2px solid black;
-  background-color: red;
-  color: #0d0d0d;
-  text-decoration: none;
-}
-#update:hover{
-background-color: #f3eded;
-}

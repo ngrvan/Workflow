@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= mytite %></title>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/neueKundeStyle.css" />
+  
 
   <body id="body">
     <%- include("./partials/header.ejs") %>
@@ -76,7 +87,9 @@
           </button>
         </form>
       </section>
+      <%- include("./partials/footer.ejs") %>
       <script>
+        
         const btn = document.querySelector(".create");
 const obAuftragID = btn.getAttribute("data-linkid");
 
@@ -171,7 +184,7 @@ form.addEventListener("submit", (event) => {
     anzahl.value = "";
     alert("Sie haben eine negative Zahl oder ein ungültiges Zeichen eingegeben!");
   } else {
-    if (confirm("Möchten Sie fortsetzen?")) {
+    if (confirm("Möchten Sie den Auftrag andern?")) {
       event.preventDefault();
       const kundeId = Kunde_ID.value;
       const auftragsId = Auftrag_id.value;
