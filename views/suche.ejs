@@ -40,7 +40,7 @@
 
     <%-include("./partials/footer.ejs")%>
 
-    <script src="../js/sucheScript.js" >
+    <script  >
     let inputId = document.getElementById("Auftrag_ID");
       let inputKunde= document.getElementById("Kunde_ID");
       var meinFormular = document.getElementById("meinFormular");
@@ -66,10 +66,11 @@
           .then((data) => {
 
             var objekteFuerKunde = [];
+           
             data.forEach((element) => {
               //console.log(element.Auftrag_id);
              //console.log("Jiro Id"+element._id);
-            
+           // console.log(element);
               if ((parseInt(eingegebenerText)=== element.Auftrag_id) ) {
                 //console.log(eingegebenerText);
                //console.log("Jiro Id"+element._id);
