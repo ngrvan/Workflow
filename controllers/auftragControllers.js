@@ -85,7 +85,7 @@ const auftrag_update_jsonId_get=(req, res) => {
     const id = req.params.id;
   
     let info = neuAuftrag.auftrag_InfoUpadat;
-    let updatePromises = []; // Array für die Promises der Aktualisierungen
+    let updatePromises = []; 
   
 
     var auftrag_Info = [];
@@ -95,17 +95,16 @@ const auftrag_update_jsonId_get=(req, res) => {
       let ankommendeDatumUpdate = info[index].ankommendeDatumUpdate;
       console.log("anzahl: " + AnzahlUpdate + ", teil: " + Teil_idUpdate + ", ankommen: " + ankommendeDatumUpdate);
   
-      // Aktualisierte Objektstruktur
+  
       let updatedObject = {
         Anzahl: AnzahlUpdate,
         Teil_id: Teil_idUpdate,
         ankommendeDatum: ankommendeDatumUpdate
       };
       auftrag_Info.push(updatedObject);
-      // Aktualisierung durch Aktualisierung des entsprechenden Objekts im Array
+      
     }
-    console.log("INFO:");
-    console.log(auftrag_Info);
+   
 
     updatePromises.push(
       Auftrag.updateOne(
@@ -133,76 +132,11 @@ const auftrag_update_jsonId_get=(req, res) => {
       });
   }
 
-/*const update_auftrag_id_put=(req, res) => {
-  console.log(req.body);
-  let neuAuftrag = req.body;
-  let kundeId = neuAuftrag.kundeId;
-  let auftragId = neuAuftrag.auftragsId;
-  let LieferdatumUpdate = neuAuftrag.LieferdatumUpdate;
-
-  const id = req.params.id;
-
-  let info = neuAuftrag.auftrag_InfoUpadat;
-  let updatePromises = []; // Array für die Promises der Aktualisierungen
-
-  for (let index = 0; index < info.length; index++) {
-    let AnzahlUpdate = info[index].AnzahlUpdate;
-    let Teil_idUpdate = info[index].Teil_idUpdate;
-    let ankommendeDatumUpdate = info[index].ankommendeDatumUpdate;
-    console.log("anzahl: " + AnzahlUpdate + ", teil: " + Teil_idUpdate + ", ankommen: " + ankommendeDatumUpdate);
-
-    // Aktualisierte Objektstruktur
-    let updatedObject = {
-      Anzahl: AnzahlUpdate,
-      Teil_id: Teil_idUpdate,
-      ankommendeDatum: ankommendeDatumUpdate
-    };
-
-    // Aktualisierung durch Aktualisierung des entsprechenden Objekts im Array
-    updatePromises.push(
-      Auftrag.updateOne(
-        { 
-          _id: id,
-          auftrag_Info: {
-            $elemMatch: { _id: _id } // Filtert das Array nach Teil_id
-          } 
-        },
-        {
-          $set: {
-            Auftrag_id: auftragId,
-            Kunde_ID: kundeId,
-            Lieferdatum: LieferdatumUpdate,
-            "auftrag_Info.$.Teil_id":Teil_idUpdate,
-            "auftrag_Info.$.Anzahl": AnzahlUpdate, // Aktualisiert die Anzahl im entsprechenden Objekt
-            "auftrag_Info.$.ankommendeDatum": ankommendeDatumUpdate // Aktualisiert das ankommendeDatum im entsprechenden Objekt
-          }
-        }
-      )
-    );
-  }
-
-  Promise.all(updatePromises)
-    .then((results) => {
-      res.json({ Link: "/alle" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: "Fehler beim Aktualisieren des Auftrags" });
-    });
-}*/
 const kundeid_auftraege_get=(req, res) => {
  
   var auftragsDaten = JSON.parse(req.params.json);
   res.render("alle", { mytite: "Suchergebnis", arrAuftrag: auftragsDaten });
-  //console.log(auftragsDaten);
 
-  /*Auftrag.find()
-    .then((result) => {
-      res.render("alle", { mytite: "Suchergebnis", arrAuftrag: result });
-    })
-    .catch((err) => {s
-      console.log(err);
-    });*/
 }
 
 const alle_auftraege_get=(req, res) => {

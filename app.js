@@ -3,10 +3,12 @@
 const express = require("express");
 const app = express();
 const port = 5000;
-const bodyParser=require("body-parser");
+const bodyParser = require("body-parser");
+const api = ` http://localhost:${port}`;
+const cors = require("cors");
+const auftragController = require("./controllers/auftragControllers");
 
-const api=` http://localhost:${port}`;
-const cors= require("cors");
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
@@ -14,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-const auftragController=require("./controllers/auftragControllers");
 
 
 // for auto refresh
@@ -31,25 +32,29 @@ liveReloadServer.server.once("connection", () => {
     liveReloadServer.refresh("/");
   }, 100);
 });
-const alleAuftragRouter= require("./routes/alleR");
+
+
+//Router
+const alleAuftragRouter = require("./routes/alleR");
+const auftragInfoRouter = require("./routes/auftragInfoR");
+const updateRouter = require("./routes/updateR");
 
 // Mongoose
-const connectDB=require("./db/connect")
-
+const connectDB = require("./db/connect");
 
 const { log } = require("console");
 
-const start =async()=> {
+const start = async () => {
   try {
-    await connectDB()
+    await connectDB();
     app.listen(port, () => {
       console.log(`Example app listening at ${api}`);
     });
   } catch (error) {
     console.log(error);
   }
-}
-
+};
+//REST API Funkion
 app.get("/", (req, res) => {
   res.redirect("/all-articles");
 });
@@ -63,31 +68,20 @@ app.get("/add-new-article", (req, res) => {
 });
 
 app.get("/Suche", auftragController.suche_auftrag_get);
-//REST API Funkion
-app.get("/auftragInfo/:id",auftragController.auftrag_json_info_get)
-app.get("/auftragArry",auftragController.alle_auftraege_json_get)
 
-app.get("/auftrag-informationen/:id",auftragController.auftrag_id_information_get  );
+app.get("/auftragInfo/:id", auftragController.auftrag_json_info_get);
+app.get("/auftragArry", auftragController.alle_auftraege_json_get);
 
-app.delete("/auftrag-informationen/:id", auftragController.delete_auftrag_id_delete  );
+app.get("/updateJson/:id", auftragController.auftrag_update_jsonId_get);
 
-
-app.get("/update/:id",auftragController.update_auftrag_id_get  );
-
-
-
-app.get("/updateJson/:id",auftragController.auftrag_update_jsonId_get);
-
-
-app.put("/update/:id",auftragController.update_auftrag_id_put);
-app.get("/suche/:json",auftragController.kundeid_auftraege_get )
+app.get("/suche/:json", auftragController.kundeid_auftraege_get);
 
 start();
 
-
-
-app.use("/alle",alleAuftragRouter);
+app.use("/alle", alleAuftragRouter);
+app.use("/", auftragInfoRouter);
+app.use("/", updateRouter);
 //  404
 app.use((req, res) => {
-  res.status(404).render("404", { mytite: "Page Not Fund"})
+  res.status(404).render("404", { mytite: "Page Not Fund" });
 });
