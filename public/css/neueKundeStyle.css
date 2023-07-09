@@ -71,7 +71,7 @@ label {
   }
   .Marke_input{
   
-    flex: 1 0 50%; /* Hier kannst du die Breite anpassen */
+    flex: 1 0 50%; 
     margin-bottom: 10px;
   padding: 20px;
   

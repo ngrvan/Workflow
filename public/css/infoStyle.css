@@ -48,3 +48,13 @@
         color: #fff;
         text-align: center;
         } 
+         
+#update{
+    border: 2px solid black;
+    background-color: red;
+    color: #0d0d0d;
+    text-decoration: none;
+  }
+  #update:hover{
+  background-color: #f3eded;
+  }

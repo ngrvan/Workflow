@@ -9,8 +9,8 @@
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link rel="stylesheet" href="/styles.css" />
-<link rel="stylesheet" href="/neueKundeStyle.css" />
+<link rel="stylesheet" href="/css/styles.css" />
+<link rel="stylesheet" href="/css/neueKundeStyle.css" />
     
 
  
@@ -65,6 +65,7 @@
                 name="auftrag_Info[0][Teil_id]"
                 class="input"
                 type="text"
+                pattern="[A-Za-z]{3}[0-9]{7}" 
                 required
               />
             </div>
@@ -88,60 +89,8 @@
       </section>
     </main>
 
- <script>
-     let icon = document.getElementById("iconId");
-
-icon.onclick = function() {
-  let auftragDiv = document.getElementsByClassName("auftragInput");
-  let count = auftragDiv.length;
-  let neuDiv = auftragDiv[0].cloneNode(true);
-  let labels = neuDiv.getElementsByTagName("label");
-  let inputs = neuDiv.getElementsByTagName("input");
-  for (let index = 0; index < labels.length; index++) {
-    labels[index].htmlFor = labels[index].htmlFor.replace(
-      "0",
-      count.toString()
-    );
-  }
-  for (let index = 0; index < inputs.length; index++) {
-    inputs[index].name = inputs[index].name.replace(
-      "0",
-      count.toString()
-    );
-  }
-
-  document.getElementById("iconId").before(neuDiv);
-};
-
-const form = document.getElementById("meinFormular");
-const inputFields = document.getElementsByClassName("input");
-const anzahl = document.getElementById("anzahl");
-
-form.addEventListener("submit", (event) => {
-  for (let i = 0; i < inputFields.length; i++) {
-    const input = inputFields[i];
-
-    // Eingabe überprüfen und anpassen
-    if (input.value < 0) {
-      input.value = "";
-      alert("Sie haben eine negative Zahl eingegeben!");
-      return; // Abbruch, wenn eine negative Zahl gefunden wurde
-    }
-  }
-
-  // Eingabe überprüfen
-  if (anzahl.value < 0 || isNaN(anzahl.value)) {
-    event.preventDefault(); // Submit-Ereignis abbrechen
-    anzahl.value = ""; // Eingabe löschen
-    alert("Sie haben eine negative Zahl oder ein ungültiges Zeichen eingegeben!");
-    return; // Abbruch, wenn eine negative Zahl oder ein ungültiges Zeichen gefunden wurde
-  }
-
-  // Bestätigung anzeigen
-  if (!confirm("Möchten Sie fortsetzen?")) {
-    event.preventDefault(); // Submit-Ereignis abbrechen
-  }
-});
+ <script src="/js/addAuftrag.js">
+     
 
     </script> 
   </body>
